@@ -1,0 +1,12 @@
+name: 'Thank You Action'
+description: 'A GitHub Action to thank contributors'
+author: 'Renz'
+
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub Token'
+    required: true
+  
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

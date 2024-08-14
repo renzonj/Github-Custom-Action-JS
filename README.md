@@ -1,5 +1,5 @@
 
-# NEXT_CUSTOM_ACTIONS
+# CUSTOM GITHUB ACTION (JS)
 
 ## Tagging and Publishing
 
@@ -13,7 +13,7 @@ git push && git push --tags
 
 ## Sample Usage
 
-Here’s an example of how to use the `NEXT_CUSTOM_ACTIONS` in a GitHub workflow:
+Here’s an example of how to use the `Github-Custom-Action-JS` in a GitHub workflow:
 
 ```yml
 name: Pull Request Checker
@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run custom action
-        uses: renzonj/NEXT_CUSTOM_ACTIONS@v3
+        uses: renzonj/Github-Custom-Action-JSv3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}

@@ -31133,7 +31133,7 @@ async function run() {
         const owner = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('owner', { required: true });
         const repo = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('repo', { required: true });
         const prNumber = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('prNumber', { required: true });
-        const buildSuccess = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getBooleanInput('buildSuccess', { required: false });
+        const buildSuccess = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getBooleanInput('buildSuccess', { required: true });
 
         const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(token);
 

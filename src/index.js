@@ -7,7 +7,7 @@ async function run() {
         const owner = core.getInput('owner', { required: true });
         const repo = core.getInput('repo', { required: true });
         const prNumber = core.getInput('prNumber', { required: true });
-        const buildSuccess = core.getBooleanInput('buildSuccess', { required: false });
+        const buildSuccess = core.getBooleanInput('buildSuccess', { required: true });
 
         const octokit = github.getOctokit(token);
 

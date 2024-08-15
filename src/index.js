@@ -17,9 +17,9 @@ async function run() {
                 repo,
                 issue_number: parseInt(prNumber, 10),
                 body: `
-                    **Build Error Detected**\n
-                    Please resolve the build errors before proceeding with the review.\n\n
-                    -- Thank you.
+                    🔴 Build Error Detected\n
+                    Please resolve the build errors. 😣\n\n
+                    - Renz.
                 `,
             });
             return; // Exit early if there's a build error
@@ -49,12 +49,12 @@ async function run() {
             repo,
             issue_number: parseInt(prNumber, 10),
             body: `
-                Pull Request #${prNumber} has been updated with: \n
+                🟢 Pull Request #${prNumber} has been updated with: \n
                 - ${diffData.added} additions\n
                 - ${diffData.changes} changes\n
                 - ${diffData.removed} deletions\n\n
 
-                Thank you for submitting your Pull Request! I will try to review it as soon as possible.\n
+                Thank you for submitting your Pull Request! I will try to review it as soon as possible. 👍😊\n
                 - Renz
             `,
         });

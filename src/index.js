@@ -17,7 +17,7 @@ async function run() {
             ref: github.context.sha,
         });
 
-        const buildCheck = checks.check_runs.find(check => check.name === 'Build' && check.status === 'completed');
+        const buildCheck = checks.check_runs.find(check => check.status === 'completed');
         if (buildCheck && buildCheck.conclusion === 'failure') {
             // Post build error message if build failed
             await octokit.rest.issues.createComment({

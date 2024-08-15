@@ -1,5 +1,5 @@
 
-# CUSTOM GITHUB ACTION (JS)
+# CUSTOM GITHUB ACTION (JS)  --v4.1 (Updated)
 
 ## Tagging and Publishing
 
@@ -21,21 +21,39 @@ name: Pull Request Checker
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - staging
+      - main
 
 jobs:
-  run:
+
+  Install-Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run build
 
+    outputs:
+      build-success: ${{ steps.build-outcome.outcome == 'success' }}
+
+
+  Commenter:
+    needs: Install-Build
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
       - name: Run custom action
-        uses: renzonj/Github-Custom-Action-JSv3
+        uses: renzonj/Github-Custom-Action-JS@v4.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
           prNumber: ${{ github.event.pull_request.number }}
+          buildSuccess: ${{ needs.Install-Build.outputs.build-success }}
 ```
 
 ## Important Notes

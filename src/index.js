@@ -10,6 +10,29 @@ async function run() {
 
         const octokit = github.getOctokit(token);
 
+        // Check the status of the build
+        const { data: checks } = await octokit.rest.checks.listForRef({
+            owner,
+            repo,
+            ref: github.context.sha,
+        });
+
+        const buildCheck = checks.check_runs.find(check => check.name === 'Build' && check.status === 'completed');
+        if (buildCheck && buildCheck.conclusion === 'failure') {
+            // Post build error message if build failed
+            await octokit.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: parseInt(prNumber, 10),
+                body: `
+                    **Build Error Detected**\n
+                    Please resolve the build errors before proceeding with the review.\n\n
+                    - Thank you.
+                `,
+            });
+            return; // Exit early if there's a build error
+        }
+
         const { data: changedFiles } = await octokit.rest.pulls.listFiles({
             owner,
             repo,

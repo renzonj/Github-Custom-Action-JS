@@ -7,19 +7,11 @@ async function run() {
         const owner = core.getInput('owner', { required: true });
         const repo = core.getInput('repo', { required: true });
         const prNumber = core.getInput('prNumber', { required: true });
+        const buildSuccess = core.getBooleanInput('buildSuccess', { required: false });
 
         const octokit = github.getOctokit(token);
 
-        // Check the status of the build
-        const { data: checks } = await octokit.rest.checks.listForRef({
-            owner,
-            repo,
-            ref: github.context.sha,
-        });
-
-        const buildCheck = checks.check_runs.find(check => check.status === 'completed');
-        if (buildCheck && buildCheck.conclusion === 'failure') {
-            // Post build error message if build failed
+        if (!buildSuccess) {
             await octokit.rest.issues.createComment({
                 owner,
                 repo,
@@ -27,7 +19,7 @@ async function run() {
                 body: `
                     **Build Error Detected**\n
                     Please resolve the build errors before proceeding with the review.\n\n
-                    - Thank you.
+                    -- Thank you.
                 `,
             });
             return; // Exit early if there's a build error

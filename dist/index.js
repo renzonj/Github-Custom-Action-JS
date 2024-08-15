@@ -31133,8 +31133,23 @@ async function run() {
         const owner = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('owner', { required: true });
         const repo = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('repo', { required: true });
         const prNumber = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('prNumber', { required: true });
+        const buildSuccess = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getBooleanInput('buildSuccess', { required: false });
 
         const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(token);
+
+        if (!buildSuccess) {
+            await octokit.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: parseInt(prNumber, 10),
+                body: `
+                    **Build Error Detected**\n
+                    Please resolve the build errors before proceeding with the review.\n\n
+                    -- Thank you.
+                `,
+            });
+            return; // Exit early if there's a build error
+        }
 
         const { data: changedFiles } = await octokit.rest.pulls.listFiles({
             owner,

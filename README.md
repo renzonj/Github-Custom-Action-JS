@@ -7,7 +7,7 @@ To tag and publish a new version of your custom action, use the following comman
 
 ```bash
 git tag v3.0
-npm run build
+npm run build  /  npm i -g @vercel/ncc
 git push && git push --tags
 ```
 

@@ -18,7 +18,7 @@ async function run() {
                 issue_number: parseInt(prNumber, 10),
                 body: `
                     🔴 Build Error Detected\n
-                    Please resolve the build errors. 😣\n\n
+                    Please resolve the build errors 😣\n\n
                     - Renz.
                 `,
             });
